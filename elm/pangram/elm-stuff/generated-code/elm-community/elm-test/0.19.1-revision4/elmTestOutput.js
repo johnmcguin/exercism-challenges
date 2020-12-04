@@ -6467,24 +6467,12 @@ var $elm_explorations$test$Expect$equateWith = F4(
 		return usesFloats ? $elm_explorations$test$Expect$fail(floatError) : A5($elm_explorations$test$Expect$testWith, $elm_explorations$test$Test$Runner$Failure$Equality, reason, comparison, b, a);
 	});
 var $elm_explorations$test$Expect$equal = A2($elm_explorations$test$Expect$equateWith, 'Expect.equal', $elm$core$Basics$eq);
-var $author$project$Pangram$alphabet = 'abcdefghijklmnopqrstuvwxyz';
-var $elm$core$String$concat = function (strings) {
-	return A2($elm$core$String$join, '', strings);
-};
+var $author$project$Pangram$alphabet = A2($elm$core$String$split, '', 'abcdefghijklmnopqrstuvwxyz');
 var $elm$regex$Regex$Match = F4(
 	function (match, index, number, submatches) {
 		return {index: index, match: match, number: number, submatches: submatches};
 	});
 var $elm$regex$Regex$contains = _Regex_contains;
-var $elm$core$List$head = function (list) {
-	if (list.b) {
-		var x = list.a;
-		var xs = list.b;
-		return $elm$core$Maybe$Just(x);
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
 var $elm$regex$Regex$fromStringWith = _Regex_fromStringWith;
 var $elm$regex$Regex$fromString = function (string) {
 	return A2(
@@ -6497,7 +6485,6 @@ var $author$project$Pangram$letter = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
 	$elm$regex$Regex$fromString('[a-z]'));
-var $elm$core$Debug$log = _Debug_log;
 var $elm$core$List$member = F2(
 	function (x, xs) {
 		return A2(
@@ -6509,34 +6496,22 @@ var $elm$core$List$member = F2(
 	});
 var $elm$core$String$toLower = _String_toLower;
 var $author$project$Pangram$isPangram = function (sentence) {
-	var stringList = A2(
-		$elm$core$Debug$log,
-		'stringList',
+	var sentenceAsList = A2(
+		$elm$core$List$filter,
+		function (s) {
+			return A2($elm$regex$Regex$contains, $author$project$Pangram$letter, s);
+		},
 		A2(
-			$elm$core$List$filter,
-			function (s) {
-				return A2($elm$regex$Regex$contains, $author$project$Pangram$letter, s);
-			},
-			A2(
-				$elm$core$String$split,
-				'',
-				$elm$core$String$toLower(sentence))));
-	var finalCount = A2(
-		$elm$core$Debug$log,
-		'final count',
-		A2(
-			$elm$core$List$filter,
-			function (s) {
-				return A2($elm$core$List$member, s, stringList);
-			},
-			A2($elm$core$String$split, '', $author$project$Pangram$alphabet)));
-	var backToString = $elm$core$String$concat(stringList);
-	var _v0 = $elm$core$List$head(stringList);
-	if (_v0.$ === 'Nothing') {
-		return false;
-	} else {
-		return ($elm$core$List$length(finalCount) < 26) ? false : true;
-	}
+			$elm$core$String$split,
+			'',
+			$elm$core$String$toLower(sentence)));
+	var lettersInAlphabet = A2(
+		$elm$core$List$filter,
+		function (s) {
+			return A2($elm$core$List$member, s, sentenceAsList);
+		},
+		$author$project$Pangram$alphabet);
+	return ($elm$core$List$length(lettersInAlphabet) < 26) ? false : true;
 };
 var $elm_explorations$test$Test$Internal$blankDescriptionFailure = $elm_explorations$test$Test$Internal$failNow(
 	{
@@ -6653,7 +6628,7 @@ var $author$project$Tests$tests = A2(
 					$author$project$Pangram$isPangram('Victor jagt zwölf Boxkämpfer quer über den großen Sylter Deich.'));
 			})
 		]));
-var $author$project$Test$Generated$Main3259666827$main = A2(
+var $author$project$Test$Generated$Main4270102162$main = A2(
 	$author$project$Test$Runner$Node$run,
 	{
 		globs: _List_Nil,
@@ -6662,7 +6637,7 @@ var $author$project$Test$Generated$Main3259666827$main = A2(
 		processes: 4,
 		report: $author$project$Test$Reporter$Reporter$ConsoleReport($author$project$Console$Text$UseColor),
 		runs: $elm$core$Maybe$Nothing,
-		seed: 30439195643471
+		seed: 85926778041735
 	},
 	$elm_explorations$test$Test$concat(
 		_List_fromArray(
@@ -6673,10 +6648,10 @@ var $author$project$Test$Generated$Main3259666827$main = A2(
 				_List_fromArray(
 					[$author$project$Tests$tests]))
 			])));
-_Platform_export({'Test':{'Generated':{'Main3259666827':{'init':$author$project$Test$Generated$Main3259666827$main($elm$json$Json$Decode$int)(0)}}}});}(this));
+_Platform_export({'Test':{'Generated':{'Main4270102162':{'init':$author$project$Test$Generated$Main4270102162$main($elm$json$Json$Decode$int)(0)}}}});}(this));
 return this.Elm;
 })({});
-var pipeFilename = "/tmp/elm_test-9825.sock";
+var pipeFilename = "/tmp/elm_test-10509.sock";
 // Make sure necessary things are defined.
 if (typeof Elm === 'undefined') {
   throw 'test runner config error: Elm is not defined. Make sure you provide a file compiled by Elm!';

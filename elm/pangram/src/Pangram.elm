@@ -3,15 +3,9 @@ module Pangram exposing (isPangram)
 import Regex
 
 
-alphabet : String
+alphabet : List String
 alphabet =
-    "abcdefghijklmnopqrstuvwxyz"
-
-
-isInAlphabet : String -> Bool
-isInAlphabet string =
-    alphabet
-        |> String.contains string
+    String.split "" "abcdefghijklmnopqrstuvwxyz"
 
 
 letter : Regex.Regex
@@ -23,20 +17,18 @@ letter =
 isPangram : String -> Bool
 isPangram sentence =
     let
-        stringList =
+        sentenceAsList =
             sentence
                 |> String.toLower
                 |> String.split ""
                 |> List.filter (\s -> Regex.contains letter s)
 
-        finalCount = List.filter(\s -> List.member s stringList) (String.split "" alphabet) |> Debug.log "final count"
-    in
-    case List.head stringList of
-        Nothing ->
-            False
+        lettersInAlphabet =
+            alphabet
+                |> List.filter(\s -> List.member s sentenceAsList)
 
-        Just _ ->
-            if List.length finalCount < 26 then
-                False
-            else
-                True
+    in
+        if List.length lettersInAlphabet < 26 then
+            False
+        else
+            True
