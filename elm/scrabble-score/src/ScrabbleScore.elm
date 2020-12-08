@@ -34,23 +34,10 @@ points =
         , ( 'z', 10 )
         ]
 
-pointMapper : Char -> Int
-pointMapper char =
-    case Dict.get char points of
-       Just p -> p
-       Nothing -> 0
-
 scoreWord : String -> Int
-scoreWord x =
-    x
-    |> normalizeInput
+scoreWord word =
+    word
+    |> String.toLower
     |> String.toList
-    |> List.map pointMapper
+    |> List.map(\char -> Maybe.withDefault 0 (Dict.get char points))
     |> List.foldl (+) 0
-
-
-normalizeInput : String -> String
-normalizeInput input =
-    input
-        |> String.toLower
-        |> String.filter Char.isAlpha
