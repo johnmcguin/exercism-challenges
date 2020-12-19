@@ -3,20 +3,7 @@ module Leap exposing (isLeapYear)
 
 isLeapYear : Int -> Bool
 isLeapYear year =
-    let
-        divisibleByFour : Bool
-        divisibleByFour =
-            year |> modBy 4 |> (==) 0
-
-        divisibleByOneHundred : Bool
-        divisibleByOneHundred =
-            year |> modBy 100 |> (==) 0
-
-        divisibleByFourHundred : Bool
-        divisibleByFourHundred =
-            year |> modBy 400 |> (==) 0
-    in
-    case ( divisibleByFour, divisibleByOneHundred, divisibleByFourHundred ) of
+    case ( divisibleBy year 4, divisibleBy year 100, divisibleBy year 400 ) of
         ( True, True, True ) ->
             True
 
@@ -25,3 +12,8 @@ isLeapYear year =
 
         _ ->
             False
+
+
+divisibleBy : Int -> Int -> Bool
+divisibleBy year num =
+    year |> modBy num |> (==) 0
